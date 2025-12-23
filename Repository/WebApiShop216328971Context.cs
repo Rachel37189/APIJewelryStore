@@ -43,7 +43,7 @@ public partial class WebApiShop216328971Context : DbContext
             entity.Property(e => e.OrederSum).HasColumnName("Oreder_Sum");
             entity.Property(e => e.UserId).HasColumnName("User_Id");
 
-            entity.HasOne(d => d.User).WithMany(p => p.Orders)
+            entity.HasOne<User>().WithMany(p => p.Orders)
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Orders_Users");

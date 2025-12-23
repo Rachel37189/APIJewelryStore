@@ -41,11 +41,11 @@ namespace WebApiShop.Controllers
         // POST api/<UsersController>
         [HttpPost]
         public async Task<ActionResult<OrderDto>> Post([FromBody] Order order)
-        {
+        { 
             OrderDto _order = await _orderService.addOrder(order);
             if (_order == null)
             {
-                return BadRequest("add order");
+                return BadRequest("order added");
             }
             return CreatedAtAction(nameof(Get), new { id = order.OrderId }, order);
 

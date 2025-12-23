@@ -8,8 +8,6 @@ namespace DTOs
 {
     public record OrderItemDto
     (
-        int OrderItemId,
-
         int OrderId,
 
         double? Quantity,

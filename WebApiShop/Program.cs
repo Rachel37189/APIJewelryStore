@@ -1,11 +1,16 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
+using NLog.Web;
 using Repository;
 using Services;
 var builder = WebApplication.CreateBuilder(args);
+builder.Host.UseNLog();
 
 // Add services to the container.
-builder.Services.AddDbContext<WebApiShop216328971Context>(options => options.UseSqlServer("Data Source=srv2\\pupils;Initial Catalog=ApiShop216328971;Integrated Security=True;Trust Server Certificate=True; Pooling=False"));
+builder.Services.AddDbContext<WebApiShop216328971Context>(options =>
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("DefaultConnection")
+    ));
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
@@ -21,6 +26,9 @@ builder.Services.AddScoped<IProductService, ProductService>();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 var app = builder.Build();
+
+var logger = NLog.LogManager.GetCurrentClassLogger();
+logger.Info("Application started (env={env})", app.Environment.EnvironmentName);
 
 if (app.Environment.IsDevelopment())
 {
@@ -38,8 +46,6 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();
-
-app.UseHttpsRedirection();
 
 app.UseAuthorization();
 

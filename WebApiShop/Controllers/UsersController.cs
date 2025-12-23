@@ -15,11 +15,13 @@ namespace WebApiShop.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-
+        private readonly ILogger<UsersController> _logger;
         IUserService _userService ;
-        public UsersController(IUserService userService)
+        public UsersController(IUserService userService, ILogger<UsersController> logger)
         {
             _userService = userService;
+            _logger = logger;
+
         }
 
         // GET: api/<UsersController>
@@ -57,10 +59,19 @@ namespace WebApiShop.Controllers
         {
             UserDto _user = await _userService.login(user);
             if (_user == null)
-                return NoContent() ;
+            {
+                _logger.LogInformation("Login failed: UserName={UserEmail},FirstName={FirstName},LastName={LastName}", user?.UserEmail, user?.FirstName, user?.LastName);
+                return NoContent();
+
+            }
+
+            _logger.LogInformation("Login success: UserName={UserEmail},FirstName={FirstName},LastName={LastName}",
+            _user.UserEmail, _user.FirstName, _user.LastName);
             return Ok(_user);
 
         }
+
+      
         // PUT api/<UsersController>/5
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] User user)
