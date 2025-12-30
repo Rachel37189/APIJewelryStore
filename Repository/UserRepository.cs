@@ -11,30 +11,29 @@ namespace Repository
         {
             _shopContext = userRepository;
         }
-
         public async Task<User> GetUserById(int id)
         {
-            return await _shopContext.Users.FindAsync(id);
+            return await _shopContext.Users.FirstOrDefaultAsync(u => u.Id == id);
         }
 
         public async Task<User> addUser(User user)
         {
             await _shopContext.Users.AddAsync(user);
-            _shopContext.SaveChanges();
+            await _shopContext.SaveChangesAsync();
+
+           // _shopContext.SaveChanges();
             return user;
         }
 
-        public void updateUser(int id,User user)
+        public async Task<User?> updateUser(User user)
         {
             _shopContext.Users.Update(user);
-            _shopContext.SaveChanges();
-    
-        }
-        public void DeleteUser(int id)
-        {
-          //  _shopContext.Users.Delete(id);
-        }
+            //_shopContext.SaveChanges();
+            await _shopContext.SaveChangesAsync();
+            return user;
 
+
+        }
         public async Task<User> login(User user)
         {
              return await _shopContext.Users.FirstOrDefaultAsync(x => x.UserEmail == user.UserEmail && x.Password == user.Password);     

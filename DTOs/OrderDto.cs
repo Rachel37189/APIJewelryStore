@@ -2,7 +2,7 @@
 {
     public record OrderDto
     (
-      
+        int orderId,
         DateOnly? OrderDate,
 
         double OrderSum ,

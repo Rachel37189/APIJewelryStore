@@ -76,7 +76,7 @@ namespace WebApiShop.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] User user)
         {
-            _userService.updateUser(id, user);
+            _userService.updateUser(id,user);
             return Ok(user);
         }
 

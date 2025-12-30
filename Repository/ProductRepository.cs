@@ -7,9 +7,9 @@ namespace Repository
     public class ProductRepository : IProductRepository
     {
         WebApiShop216328971Context _shopContext;
-        public ProductRepository(WebApiShop216328971Context userRepository)
+        public ProductRepository(WebApiShop216328971Context context)
         {
-            _shopContext = userRepository;
+            _shopContext = context;
         }
 
         public async Task<List<Product>> GetProducts(int? pId,string? name,float? price,int? CategoryId,string? desc)

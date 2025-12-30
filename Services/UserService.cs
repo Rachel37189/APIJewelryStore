@@ -36,7 +36,7 @@ namespace Services
         }
         public void updateUser(int id, User user)
         {
-            _userRepository.updateUser(id, user);
+            _userRepository.updateUser(user);
 
         }
         public async Task<UserDto> login(User user)

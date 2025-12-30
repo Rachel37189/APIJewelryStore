@@ -7,14 +7,14 @@ namespace Repository
     public class OrderRepository : IOrderRepository
     {
         WebApiShop216328971Context _shopContext;
-        public OrderRepository(WebApiShop216328971Context userRepository)
+        public OrderRepository(WebApiShop216328971Context context)
         {
-            _shopContext = userRepository;
+            _shopContext = context;
         }
 
         public async Task<Order> GetOrderById(int id)
         {
-            return await _shopContext.Orders.FindAsync(id);
+            return await _shopContext.Orders.FirstOrDefaultAsync(o => o.OrderId== id);
         }
 
         public async Task<Order> addOrder(Order order)
