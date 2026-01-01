@@ -8,6 +8,7 @@ namespace Tests
 {
     public class UserRepoUnitTest : TestBase
     {
+        #region happy tests
         [Fact]
         public async Task GetByIdAsync_ExistingId_ReturnsUser()
         {
@@ -94,6 +95,93 @@ namespace Tests
             mockContext.Verify(m => m.SaveChangesAsync(default), Times.Once);
         }
 
-    
+        #endregion
+
+        #region unhappy tests
+        // אין משתמש עם מזהה כזה
+        [Fact]
+        public async Task GetUserById_NotExistingId_ReturnsNull()
+        {
+            // Arrange
+            var users = new List<User>
+            {
+                new User { Id = 1, UserEmail = "a@a.com" }
+            };
+
+            var mockContext =
+                GetMockContext<WebApiShop216328971Context, User>(users, c => c.Users);
+
+            var repo = new UserRepository(mockContext.Object);
+
+            // Act
+            var result = await repo.GetUserById(999);
+
+            // Assert
+            Assert.Null(result);
+        }
+        // כניסה עם סיסמה שגויה
+
+        [Fact]
+        public async Task Login_WrongPassword_ReturnsNull()
+        {
+            // Arrange
+            var users = new List<User>
+            {
+                new User { UserEmail = "test@test.com", Password = "1234" }
+            };
+
+            var mockContext =
+                GetMockContext<WebApiShop216328971Context, User>(users, c => c.Users);
+
+            var repo = new UserRepository(mockContext.Object);
+
+            // Act
+            var result = await repo.login(new User
+            {
+                UserEmail = "test@test.com",
+                Password = "WRONG"
+            });
+
+            // Assert
+            Assert.Null(result);
+        }
+        //User null
+        [Fact]
+        public async Task Register_NullUser_ThrowsException()
+        {
+            // Arrange
+            var mockContext = new Mock<WebApiShop216328971Context>();
+            mockContext.Setup(x => x.Users).ReturnsDbSet(new List<User>());
+            var repo = new UserRepository(mockContext.Object);
+
+            // Act + Assert
+            await Assert.ThrowsAsync<ArgumentNullException>(
+                () => repo.addUser(null)
+            );
+        }
+
+        // עדכון משתמש שלא קיים
+        [Fact]
+        public async Task UpdateUser_NotExistingUser_ReturnsNull()
+        {
+            // Arrange
+            var users = new List<User>();
+
+            var mockContext =
+                GetMockContext<WebApiShop216328971Context, User>(users, c => c.Users);
+
+            var repo = new UserRepository(mockContext.Object);
+
+            var user = new User { Id = 99, FirstName = "X" };
+
+            // Act
+            var result = await repo.updateUser(user);
+
+            // Assert
+            Assert.Null(result);
+        }
+
+
+        #endregion
     }
 }

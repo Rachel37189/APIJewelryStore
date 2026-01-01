@@ -10,6 +10,7 @@ namespace Tests
 {
     public class CategoryRepoUnitTest : TestBase
     {
+        #region happy tests
         [Fact]
         public async Task GetCategories_ReturnsAllCategories()
         {
@@ -33,5 +34,29 @@ namespace Tests
             Assert.Equal(2, result.Count);
             Assert.Equal("Cakes", result[0].CategoryName);
         }
+    
+    #endregion
+
+        #region unhappy tests
+    //אין קטגוריות במערכת
+    [Fact]
+        public async Task GetCategories_EmptyList_ReturnsEmpty()
+        {
+            // Arrange
+            var mockContext =
+                GetMockContext<WebApiShop216328971Context, Category>(
+                    new List<Category>(), c => c.Categories);
+
+            var repo = new CategoryRepository(mockContext.Object);
+
+            // Act
+            var result = await repo.GetCategories();
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Empty(result);
+        }
+
+        #endregion
     }
 }

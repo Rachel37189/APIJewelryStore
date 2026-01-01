@@ -21,7 +21,7 @@ namespace Tests
             _repository = new ProductRepository(_context);
             _context.ChangeTracker.Clear();
         }
-
+        #region happy tests
         [Fact]
         public async Task GetProducts_ShouldReturnAllProducts()
         {
@@ -37,5 +37,19 @@ namespace Tests
             Assert.NotNull(result);
             Assert.Contains(result, p => p.ProductName == "TestProduct");
         }
+        #endregion
+
+        #region unhappy tests
+
+        [Fact]
+        public async Task GetProducts_WhenNoProducts_ReturnsEmptyList()
+        {
+            var result = await _repository.GetProducts(null, null, null, null, null);
+
+            Assert.NotNull(result);
+            Assert.Empty(result);
+        }
+
+        #endregion
     }
 }

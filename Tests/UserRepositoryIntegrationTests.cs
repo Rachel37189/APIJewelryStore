@@ -29,6 +29,8 @@ namespace Tests
             // אפשר לנקות נתונים פה אם רוצים
             return Task.CompletedTask;
         }
+
+        #region HappyTests
         [Fact]
         public async Task RegisterAsync_ShouldSaveUserToRealDatabase()
         {
@@ -54,6 +56,71 @@ namespace Tests
             Assert.NotNull(result);
             Assert.Equal("login@integration.com", result.UserEmail);
         }
+        #endregion
+
+
+        #region unHappy Tests
+        // כניסה עם סיסמה שגויה
+        [Fact]
+        public async Task LoginAsync_WrongPassword_ReturnsNull()
+        {
+            var user = new User
+            {
+                UserEmail = "fail@test.com",
+                Password = "123",
+                FirstName = "A",
+                LastName = "B"
+            };
+
+            await _context.Users.AddAsync(user);
+            await _context.SaveChangesAsync();
+            _context.ChangeTracker.Clear();
+
+            var loginAttempt = new User
+            {
+                UserEmail = "fail@test.com",
+                Password = "wrong"
+            };
+
+            var result = await _repository.login(loginAttempt);
+
+            Assert.Null(result);
+        }
+        //רישום משתמש עם אימייל שכבר קיים
+        [Fact]
+        //לא עובר כי אין דרישת ייחודיות במייל בטבלה
+
+        public async Task RegisterAsync_DuplicateEmail_ThrowsException()
+        {
+            var user1 = new User { UserEmail = "dup@test.com", Password = "123" };
+            var user2 = new User { UserEmail = "dup@test.com", Password = "456" };
+
+            await _repository.addUser(user1);
+
+            await Assert.ThrowsAsync<DbUpdateException>(() =>
+                _repository.addUser(user2));
+        }
+        // כניסה עם אימייל שלא קיים
+        [Fact]
+        public async Task Login_EmailNotExists_ReturnsNull()
+        {
+            // Arrange
+            var user = new User
+            {
+                UserEmail = "notexist@test.com",
+                Password = "123"
+            };
+
+            // Act
+            var result = await _repository.login(user);
+
+            // Assert
+            Assert.Null(result);
+        }
+        
+        
+
+        #endregion
     }
 }
 

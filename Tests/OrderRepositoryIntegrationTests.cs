@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Repository;
 using Entities;
+using Microsoft.EntityFrameworkCore;
 namespace Tests
 {
     
@@ -20,7 +21,7 @@ namespace Tests
             _repository = new OrderRepository(_context);
             _context.ChangeTracker.Clear();
         }
-
+        #region happy tests
         [Fact]
         public async Task AddOrder_ShouldSaveOrderToDatabase()
         {
@@ -29,7 +30,7 @@ namespace Tests
             await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
 
-            var order = new Order { /* מלאי שדות לפי Entity */ OrederSum = 100 ,UserId = user.Id};
+            var order = new Order {  OrederSum = 100 ,UserId = user.Id};
 
             // Act
             var result = await _repository.addOrder(order);
@@ -59,5 +60,62 @@ namespace Tests
             Assert.NotNull(result);
             Assert.Equal(200, result.OrederSum);
         }
+        #endregion
+
+
+        #region unhappy tests
+        //שליפת הזמנה שלא קיימת
+        [Fact]
+        public async Task GetOrderById_OrderDoesNotExist_ReturnsNull()
+        {
+            var result = await _repository.GetOrderById(9999);
+
+            Assert.Null(result);
+        }
+        //ניסיון להוסיף הזמנה עם משתמש לא קיים
+        [Fact]
+        public async Task AddOrder_WithoutUser_ThrowsException()
+        {
+            var order = new Order
+            {
+                OrederSum = 100,
+                UserId = 999 // לא קיים
+            };
+
+            await Assert.ThrowsAsync<DbUpdateException>(() =>
+                _repository.addOrder(order));
+        }
+ 
+       
+        // ניסיון להוסיף הזמנה עם סכום שלילי
+        [Fact]
+        public async Task AddOrder_NegativeSum_SavedButInvalidBusinessCase()
+        {
+            // Arrange
+            var user = new User
+            {
+                UserEmail = "sum@test.com",
+                Password = "123",
+                FirstName = "A",
+                LastName = "B"
+            };
+
+            await _context.Users.AddAsync(user);
+            await _context.SaveChangesAsync();
+
+            var order = new Order
+            {
+                OrederSum = -50,
+                UserId = user.Id
+            };
+
+            // Act
+            var result = await _repository.addOrder(order);
+
+            // Assert
+            Assert.True(result.OrederSum < 0);
+        }
+
+        #endregion
     }
 }

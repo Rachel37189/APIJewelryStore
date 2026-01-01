@@ -21,7 +21,7 @@ namespace Tests
             // Clear ChangeTracker כדי למנוע tracked duplicates
             _context.ChangeTracker.Clear();
         }
-
+        #region HappyTests
         [Fact]
         public async Task GetCategories_ShouldReturnAllCategories()
         {
@@ -37,8 +37,21 @@ namespace Tests
             Assert.NotNull(result);
             Assert.Contains(result, c => c.CategoryName == "TestCat");
         }
+        #endregion
+
+        #region UnhappyTests
+        [Fact]
+        public async Task GetCategories_WhenEmpty_ReturnsEmptyList()
+        {
+            var result = await _repository.GetCategories();
+
+            Assert.NotNull(result);
+            Assert.Empty(result);
+        }
+
+        #endregion
     }
 
-  
+
 
 }

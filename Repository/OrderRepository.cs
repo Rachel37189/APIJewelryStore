@@ -17,13 +17,16 @@ namespace Repository
             return await _shopContext.Orders.FirstOrDefaultAsync(o => o.OrderId== id);
         }
 
-        public async Task<Order> addOrder(Order order)
+       
+        public async Task<Order> addOrder(Order? order)
         {
+            if (order == null)
+                throw new ArgumentNullException(nameof(order), "Order cannot be null");
+
             await _shopContext.Orders.AddAsync(order);
-            _shopContext.SaveChanges();
+            await _shopContext.SaveChangesAsync();
             return order;
         }
-
 
     }
 }
