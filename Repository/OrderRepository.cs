@@ -6,15 +6,15 @@ namespace Repository
 {
     public class OrderRepository : IOrderRepository
     {
-        WebApiShop216328971Context _shopContext;
-        public OrderRepository(WebApiShop216328971Context context)
+        JewelryStoreContext _JewelryStore;
+        public OrderRepository(JewelryStoreContext context)
         {
-            _shopContext = context;
+            _JewelryStore = context;
         }
 
         public async Task<Order> GetOrderById(int id)
         {
-            return await _shopContext.Orders.FirstOrDefaultAsync(o => o.OrderId== id);
+            return await _JewelryStore.Orders.FirstOrDefaultAsync(o => o.OrderId== id);
         }
 
        
@@ -23,8 +23,8 @@ namespace Repository
             if (order == null)
                 throw new ArgumentNullException(nameof(order), "Order cannot be null");
 
-            await _shopContext.Orders.AddAsync(order);
-            await _shopContext.SaveChangesAsync();
+            await _JewelryStore.Orders.AddAsync(order);
+            await _JewelryStore.SaveChangesAsync();
             return order;
         }
 

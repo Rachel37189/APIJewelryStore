@@ -6,15 +6,15 @@ namespace Repository
 {
     public class CategoryRepository :ICategoryRepository
     {
-        WebApiShop216328971Context _shopContext;
-        public CategoryRepository(WebApiShop216328971Context context)
+        JewelryStoreContext _JewelryStore;
+        public CategoryRepository(JewelryStoreContext context)
         {
-            _shopContext = context;
+            _JewelryStore = context;
         }
 
         public async Task<List<Category>> GetCategories()
         {
-            return await _shopContext.Categories.ToListAsync();
+            return await _JewelryStore.Categories.ToListAsync();
         }
 
 

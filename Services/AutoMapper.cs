@@ -16,7 +16,9 @@ namespace Services
             CreateMap<Order, OrderDto>().ReverseMap();
             CreateMap<Category, CategoryDto>().ReverseMap();
             CreateMap<OrderItem, OrderItemDto>().ReverseMap();
-         //   CreateMap<List<Category>, List<CategoryDto>>().ReverseMap();
+            CreateMap<ProductCreateDTO,Product>().ReverseMap();
+            //CreateMap<Entities.Product, DTOs.ProductCreateDTO>().ReverseMap();
+            //   CreateMap<List<Category>, List<CategoryDto>>().ReverseMap();
 
         }
     }

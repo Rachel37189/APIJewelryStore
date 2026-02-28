@@ -43,7 +43,7 @@ public partial class WebApiShop216328971Context : DbContext
         {
             entity.Property(e => e.OrderId).HasColumnName("Order_Id");
             entity.Property(e => e.OrderDate).HasColumnName("Order_Date");
-            entity.Property(e => e.OrederSum).HasColumnName("Oreder_Sum");
+            entity.Property(e => e.TotalPrice).HasColumnName("Oreder_Sum");
             entity.Property(e => e.UserId).HasColumnName("User_Id");
 
             entity.HasOne<User>().WithMany(p => p.Orders)
@@ -75,7 +75,7 @@ public partial class WebApiShop216328971Context : DbContext
         {
             entity.Property(e => e.ProductId).HasColumnName("Product_Id");
             entity.Property(e => e.CategoryId).HasColumnName("Category_Id");
-            entity.Property(e => e.Description)
+            entity.Property(e => e.ShortDescription)
                 .HasMaxLength(500)
                 .IsFixedLength();
             entity.Property(e => e.ProductName)
@@ -101,7 +101,7 @@ public partial class WebApiShop216328971Context : DbContext
                 .IsRequired()
                 .HasMaxLength(20)
                 .IsFixedLength();
-            entity.Property(e => e.UserEmail)
+            entity.Property(e => e.Email)
                 .IsRequired()
                 .HasMaxLength(30)
                 .IsFixedLength();

@@ -22,16 +22,43 @@ namespace WebApiShop.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<productDto>>> Get(int? pId, string? name, float? price, int? CategoryId, string? desc)
+        public async Task<ActionResult<List<productDto>>> Get(
+                                              int? categoryId,
+                                              string? color,
+                                              float? minPrice,
+                                              float? maxPrice,
+                                              bool? justOnline,
+                                              bool? isClassic,
+                                              bool? isTrendy,
+                                              bool? isPearls,
+                                              bool? isStudio,
+                                              string? sortMode)// "low_to_high" / "high_to_low" / "date"
         {
-           
-            List<productDto> product= await _productService.GetProducts(pId,name, price,CategoryId,desc);
-            if (product == null)
-                   return NoContent();
-            return Ok(product);
-        }
-        
+            var products = await _productService.GetProductsAsync(
+                categoryId, color, minPrice, maxPrice,
+                justOnline, isClassic, isTrendy, isPearls, isStudio,
+                sortMode
+            );
 
-       
+            return Ok(products);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<ProductCreateDTO>> Post([FromBody] ProductCreateDTO dto)
+        {
+            var created = await _productService.AddProductAsync(dto);
+
+            return CreatedAtAction(
+                nameof(Get),
+                new { id = created.ProductId },
+                created
+            );
+        }
+            
+
+   
+
+
+
     }
 }

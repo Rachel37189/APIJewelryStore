@@ -2,22 +2,60 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace Entities;
 
 public partial class Product
 {
+    [Key]
     public int ProductId { get; set; }
 
+    [Required]
+    [StringLength(40)]
     public string ProductName { get; set; }
 
-    public double Price { get; set; }
+    [Required]
+    [StringLength(100)]
+    public string ShortDescription { get; set; }
 
-    public int? CategoryId { get; set; }
+    [Required]
+    public string LongDescription { get; set; }
 
-    public string Description { get; set; }
+    public double ProductPrice { get; set; }
 
+    public int CategoryId { get; set; }
+
+    [Required]
+    [StringLength(30)]
+    public string Color { get; set; }
+
+    public DateOnly DateAdded { get; set; }
+
+    [Required]
+    [StringLength(100)]
+    public string Image1 { get; set; }
+
+    [Required]
+    [StringLength(100)]
+    public string Image2 { get; set; }
+
+    public bool JustOnline { get; set; }
+
+    public bool IsClassic { get; set; }
+
+    public bool IsTrendy { get; set; }
+
+    public bool IsPearls { get; set; }
+
+    public bool IsStudio { get; set; }
+
+    [ForeignKey("CategoryId")]
+    [InverseProperty("Products")]
     public virtual Category Category { get; set; }
 
+    [InverseProperty("Product")]
     public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
 }

@@ -6,45 +6,45 @@ namespace Repository
 {
     public class UserRepository : IUserRepository
     {
-        WebApiShop216328971Context _shopContext;
-        public UserRepository(WebApiShop216328971Context userRepository)
+        JewelryStoreContext _JewelryStore;
+        public UserRepository(JewelryStoreContext userRepository)
         {
-            _shopContext = userRepository;
+            _JewelryStore = userRepository;
         }
         public async Task<User> GetUserById(int id)
         {
-            return await _shopContext.Users.FirstOrDefaultAsync(u => u.Id == id);
+            return await _JewelryStore.Users.FirstOrDefaultAsync(u => u.UserId == id);
         }
         public async Task<User> addUser(User? user)
         {
             if (user == null)
                 throw new ArgumentNullException(nameof(user), "User cannot be null");
 
-            await _shopContext.Users.AddAsync(user);
-            await _shopContext.SaveChangesAsync();
+            await _JewelryStore.Users.AddAsync(user);
+            await _JewelryStore.SaveChangesAsync();
             return user;
         }
 
  
         public async Task<User?> updateUser(User user)
         {
-            var existingUser = await _shopContext.Users
-                .FirstOrDefaultAsync(u => u.Id == user.Id);
+            var existingUser = await _JewelryStore.Users
+                .FirstOrDefaultAsync(u => u.UserId == user.UserId);
 
             if (existingUser == null)
                 return null;
 
             existingUser.FirstName = user.FirstName;
             existingUser.LastName = user.LastName;
-            existingUser.UserEmail = user.UserEmail;
+            existingUser.Email = user.Email;
 
-            await _shopContext.SaveChangesAsync();
+            await _JewelryStore.SaveChangesAsync();
             return existingUser;
         }
 
         public async Task<User> login(User user)
         {
-             return await _shopContext.Users.FirstOrDefaultAsync(x => x.UserEmail == user.UserEmail && x.Password == user.Password);     
+             return await _JewelryStore.Users.FirstOrDefaultAsync(x => x.Email == user.Email && x.Password == user.Password);     
 
         }
     }

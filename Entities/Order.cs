@@ -2,20 +2,32 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entities;
 
 public partial class Order
 {
+    [Key]
     public int OrderId { get; set; }
-
-    public DateOnly? OrderDate { get; set; }
-
-    public double OrederSum { get; set; }
 
     public int UserId { get; set; }
 
-    public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
-//    public virtual User User { get; set; }
+    public DateOnly OrderDate { get; set; }
 
+    public int Status { get; set; }
+
+    public double TotalPrice { get; set; }
+
+    [Required]
+    [StringLength(60)]
+    public string ShippingMethod { get; set; }
+
+    [InverseProperty("Order")]
+    public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
+
+    [ForeignKey("UserId")]
+    [InverseProperty("Orders")]
+    public virtual User User { get; set; }
 }

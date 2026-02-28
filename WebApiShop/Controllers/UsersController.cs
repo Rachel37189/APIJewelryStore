@@ -50,7 +50,7 @@ namespace WebApiShop.Controllers
             {
                 return BadRequest("סיסמא חלשה - נסה סיסמא שונה");
             }
-            return CreatedAtAction(nameof(Get), new { id = user.Id }, user);
+            return CreatedAtAction(nameof(Get), new { id = user.UserId }, user);
 
         }
 
@@ -60,7 +60,7 @@ namespace WebApiShop.Controllers
             UserDto _user = await _userService.login(user);
             if (_user == null)
             {
-                _logger.LogInformation("Login failed: UserName={UserEmail},FirstName={FirstName},LastName={LastName}", user?.UserEmail, user?.FirstName, user?.LastName);
+                _logger.LogInformation("Login failed: UserName={UserEmail},FirstName={FirstName},LastName={LastName}", user?.Email, user?.FirstName, user?.LastName);
                 return NoContent();
 
             }

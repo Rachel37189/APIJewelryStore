@@ -2,19 +2,44 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entities;
 
 public partial class User
 {
-    public int Id { get; set; }
-    public string UserEmail { get; set; }
+    [Key]
+    public int UserId { get; set; }
 
+    [Required]
+    [StringLength(30)]
+    public string Email { get; set; }
+
+    [StringLength(20)]
     public string FirstName { get; set; }
 
+    [StringLength(20)]
     public string LastName { get; set; }
 
+    [Required]
+    [StringLength(20)]
     public string Password { get; set; }
 
+    public int Phone { get; set; }
+
+    [Required]
+    [StringLength(20)]
+    public string City { get; set; }
+
+    [Required]
+    [StringLength(30)]
+    public string Street { get; set; }
+
+    public int HouseNumber { get; set; }
+
+    public bool IsAdmin { get; set; }
+
+    [InverseProperty("User")]
     public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
 }
