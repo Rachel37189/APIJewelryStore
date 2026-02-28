@@ -29,7 +29,7 @@ public partial class WebApiShop_215602996Context : DbContext
     {
         modelBuilder.Entity<Category>(entity =>
         {
-            entity.Property(e => e.CategoryId).HasColumnName("Category_Id");
+            entity.Property(e => e.CaregoryId).HasColumnName("Category_Id");
             entity.Property(e => e.CategoryName)
                 .IsRequired()
                 .HasMaxLength(30)
@@ -41,7 +41,7 @@ public partial class WebApiShop_215602996Context : DbContext
         {
             entity.Property(e => e.OrderId).HasColumnName("Order_Id");
             entity.Property(e => e.OrderDate).HasColumnName("Order_Date");
-            entity.Property(e => e.OrderSum).HasColumnName("Order_sum");
+            entity.Property(e => e.TotalPrice).HasColumnName("Order_sum");
             entity.Property(e => e.UserId).HasColumnName("User_Id");
 
             entity.HasOne(d => d.User).WithMany(p => p.Orders)
@@ -73,7 +73,7 @@ public partial class WebApiShop_215602996Context : DbContext
         {
             entity.Property(e => e.ProductId).HasColumnName("Product_Id");
             entity.Property(e => e.CategoryId).HasColumnName("Category_Id");
-            entity.Property(e => e.Description)
+            entity.Property(e => e.ShortDescription)
                 .HasMaxLength(500)
                 .IsFixedLength();
             entity.Property(e => e.ProductName)
@@ -90,7 +90,7 @@ public partial class WebApiShop_215602996Context : DbContext
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.UserId).HasColumnName("id");
             entity.Property(e => e.FirstName)
                 .HasMaxLength(20)
                 .IsFixedLength();
@@ -101,7 +101,7 @@ public partial class WebApiShop_215602996Context : DbContext
                 .IsRequired()
                 .HasMaxLength(20)
                 .IsFixedLength();
-            entity.Property(e => e.UserName)
+            entity.Property(e => e.Email)
                 .IsRequired()
                 .HasMaxLength(50)
                 .IsFixedLength();

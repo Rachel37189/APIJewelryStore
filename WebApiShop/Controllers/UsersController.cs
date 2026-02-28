@@ -15,23 +15,14 @@ namespace WebApiShop.Controllers
     public class UsersController : ControllerBase
     {
         private readonly ILogger<UsersController> _logger;
+        private readonly IUserService _userService;
         public UsersController(ILogger<UsersController> logger, IUserService userService)
         {
             _logger = logger;
             _userService = userService;
         }
-        IUserService _userService ;
-        //public UsersController(IUserService userService)
-        //{
-        //    _userService = userService;
-        //}
+   
 
-        // GET: api/<UsersController>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
 
         // GET api/<UsersController>/5
         [HttpGet("{id}")]
@@ -47,25 +38,25 @@ namespace WebApiShop.Controllers
         [HttpPost]
         public async Task<ActionResult<UserDTO>> Post([FromBody] User user)
         {
-           UserDTO _user = await _userService.addUser(user);
+           UserDTO _user = await _userService.AddUser(user);
             if (_user == null)
             {
                 return BadRequest("סיסמא חלשה - נסה סיסמא שונה");
             }
-            return CreatedAtAction(nameof(Get), new { id = user.Id }, user);
+            return CreatedAtAction(nameof(Get), new { id = user.UserId }, user);
 
         }
 
         [HttpPost("Login")]
         public async Task<ActionResult<UserDTO>> Login([FromBody] User user)
         {
-           UserDTO _user = await _userService.login(user);
+           UserDTO _user = await _userService.Login(user);
             if (_user == null) {
-                _logger.LogInformation("Login failed: UserName={UserName},Password={Password}", user.UserName,user.Password);
+                _logger.LogInformation("Login failed: UserName={UserName},Password={Password}", user.Email,user.Password);
                 return NoContent() ;
             }
             _logger.LogInformation("Login success: UserName={UserName},Password={Password}",
-             user.UserName, user.Password);
+             user.Email, user.Password);
             return Ok(_user);
 
         }
@@ -73,7 +64,7 @@ namespace WebApiShop.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody] User user)
         {
-            await _userService.updateUser(id, user);
+            await _userService.UpdateUser(id, user);
             return Ok(user);
         }
 

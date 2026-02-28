@@ -4,6 +4,21 @@ namespace Repository
 {
     public interface IProductRepository
     {
-        Task<List<Product>> GetProducts(int? Product_Id, string? name, float? price, int? CategoryId, string? descripion);
+        
+            Task<List<Product>> GetProductsAsync(
+                int? categoryId,
+                string? color,
+                float? minPrice,
+                float? maxPrice,
+                bool? justOnline,
+                bool? isClassic,
+                bool? isTrendy,
+                bool? isPearls,
+                bool? isStudio,
+                string? sortMode
+            );
+        //Task<Product> AddProduct(Product product);
+        Task<Product> AddProductAsync(Product product);
     }
+
 }

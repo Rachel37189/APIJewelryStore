@@ -8,14 +8,14 @@ namespace Repository
     public class OrderRepository : IOrderRepository
     {
 
-        WebApiShop_215602996Context _webApiShopContext;
-        public OrderRepository(WebApiShop_215602996Context webApiShopContext)
+        public readonly JewelryStoreContext _jewelryStoreContext;
+        public OrderRepository(JewelryStoreContext jewelryStoreContext)
         {
-            _webApiShopContext = webApiShopContext;
+            _jewelryStoreContext = jewelryStoreContext;
         }
         public async Task<Order> GetOrderById(int id)
         {
-            return await _webApiShopContext.Orders.FirstOrDefaultAsync(o=>o.OrderId==id);
+            return await _jewelryStoreContext.Orders.FirstOrDefaultAsync(o=>o.OrderId==id);
         }
 
         public async Task<Order> addOrder(Order? order)
@@ -23,8 +23,8 @@ namespace Repository
             if (order == null)
                 throw new ArgumentNullException(nameof(order), "Order cannot be null");
 
-            await _webApiShopContext.Orders.AddAsync(order);
-            await _webApiShopContext.SaveChangesAsync();
+            await _jewelryStoreContext.Orders.AddAsync(order);
+            await _jewelryStoreContext.SaveChangesAsync();
             return order;
         }
 

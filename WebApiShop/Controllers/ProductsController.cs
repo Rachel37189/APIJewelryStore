@@ -6,7 +6,6 @@ using Services;
 using System.Security.Cryptography;
 using System.Text.Json;
 using static WebApiShop.Controllers.UsersController;
-using DTOs;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -16,24 +15,46 @@ namespace WebApiShop.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
-
-        IProductService _productService;
-        public ProductsController (IProductService productService)
+        public readonly IProductService _productService;
+        public ProductsController(IProductService productService)
         {
             _productService = productService;
         }
 
         // GET: api/<UsersController>
         [HttpGet]
-        public async  Task<ActionResult<List<ProductDTO>>> Get(int? Product_Id, string? name, float? price, int? CategoryId, string? descripion)
+        [HttpGet]
+        public async Task<ActionResult<List<ProductDTO>>> Get(
+                    int? categoryId,
+                    string? color,
+                    float? minPrice,
+                    float? maxPrice,
+                    bool? justOnline,
+                    bool? isClassic,
+                    bool? isTrendy,
+                    bool? isPearls,
+                    bool? isStudio,
+                    string? sortMode   // "low_to_high" / "high_to_low" / "date"
+)
         {
-            //return await _productService.GetProducts(Product_Id, name, price, CategoryId, descripion);
-            List<ProductDTO> product = await _productService.GetProducts(Product_Id, name, price, CategoryId, descripion);
-            if (product == null)
-                return NoContent();
-            return Ok(product);
-        }
+            var products = await _productService.GetProductsAsync(
+                categoryId, color, minPrice, maxPrice,
+                justOnline, isClassic, isTrendy, isPearls, isStudio,
+                sortMode
+            );
 
-   
+            return Ok(products);
+        }
+        [HttpPost]
+        public async Task<ActionResult<ProductCreateDTO>> Post([FromBody] ProductCreateDTO dto)
+        {
+            var created = await _productService.AddProductAsync(dto);
+
+            return CreatedAtAction(
+                nameof(Get),
+                new { id = created.ProductId },
+                created
+            );
+        }
     }
 }

@@ -8,34 +8,34 @@ namespace Repository
     public class UserRepository : IUserRepository
     {
 
-        WebApiShop_215602996Context _webApiShopContext;
-        public UserRepository(WebApiShop_215602996Context webApiShopContext)
+        private readonly JewelryStoreContext _jewelryStoreContext;
+        public UserRepository(JewelryStoreContext jewelryStoreContext)
         {
-            _webApiShopContext = webApiShopContext;
+            _jewelryStoreContext = jewelryStoreContext;
         }
         public async Task<User> GetUserById(int id)
         {
-            return await _webApiShopContext.Users.FirstOrDefaultAsync(u=>u.Id==id);
+            return await _jewelryStoreContext.Users.FirstOrDefaultAsync(u=>u.UserId==id);
         }
-        public async Task<User> addUser(User? user)
+        public async Task<User> AddUser(User? user)
         {
             if (user == null)
                 throw new ArgumentNullException(nameof(user), "User cannot be null");
 
-            await _webApiShopContext.Users.AddAsync(user);
-            await _webApiShopContext.SaveChangesAsync();
+            await _jewelryStoreContext.Users.AddAsync(user);
+            await _jewelryStoreContext.SaveChangesAsync();
             return user;
         }
        
-        public async Task updateUser(int id, User user)
+        public async Task UpdateUser(int id, User user)
         {
-             _webApiShopContext.Users.Update(user);
+            _jewelryStoreContext.Users.Update(user);
             //_webApiShopContext.Users.Update(user);
-            await _webApiShopContext.SaveChangesAsync();
+            await _jewelryStoreContext.SaveChangesAsync();
         }
-        public async Task<User> login(User user)
+        public async Task<User> Login(User user)
         {
-            return await _webApiShopContext.Users.FirstOrDefaultAsync(x => x.UserName == user.UserName && x.Password == user.Password);
+            return await _jewelryStoreContext.Users.FirstOrDefaultAsync(x => x.Email == user.Email && x.Password == user.Password);
         }
     }
 }

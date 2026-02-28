@@ -15,7 +15,7 @@ namespace WebApiShop.Controllers
     public class OrdersController : ControllerBase
     {
 
-       IOrderService _orderService;
+        public readonly IOrderService _orderService;
         public OrdersController(IOrderService orderService)
         {
             _orderService = orderService;

@@ -7,10 +7,24 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddDbContext<WebApiShop_215602996Context>(options => 
+builder.Services.AddDbContext<JewelryStoreContext>(options => 
     options.UseSqlServer
         (builder.Configuration.GetConnectionString("DefaultConnection")
 ));
+
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAngular",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:4200") // הכתובת של אנגולר
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+});
+
+
 builder.Host.UseNLog();
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
@@ -42,6 +56,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseHttpsRedirection();
+
+app.UseCors("AllowAngular");
 
 app.UseAuthorization();
 

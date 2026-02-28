@@ -8,14 +8,14 @@ namespace Repository
     public class CategoryRepository : ICategoryRepository
     {
 
-        WebApiShop_215602996Context _webApiShopContext;
-        public CategoryRepository(WebApiShop_215602996Context webApiShopContext)
+        JewelryStoreContext _jewelryStoreContext;
+        public CategoryRepository(JewelryStoreContext jewelryStoreContext)
         {
-            _webApiShopContext = webApiShopContext;
+            _jewelryStoreContext = jewelryStoreContext;
         }
         public async Task<List<Category>> GetCategories()
         {
-            return await _webApiShopContext.Categories.ToListAsync();
+            return await _jewelryStoreContext.Categories.ToListAsync();
         }
 
     }
