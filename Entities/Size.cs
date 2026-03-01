@@ -9,15 +9,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WebApiShop.Entities;
 
-[Keyless]
-public partial class Size
+public class Size
 {
-    public int ProductId { get; set; }
-
-    public double ProductSize { get; set; }
-
+    public int SizeId { get; set; }        // תואם ל-PK ב-SQL
+    public int ProductId { get; set; }     // תואם ל-FK ב-SQL
+    public string ProductSize { get; set; }
     public int Amount { get; set; }
 
-    [ForeignKey("ProductId")]
+    // קשר ניווט חזרה למוצר (אופציונלי אך מומלץ)
     public virtual Product Product { get; set; }
 }

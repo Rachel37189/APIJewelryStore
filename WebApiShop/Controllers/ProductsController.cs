@@ -22,7 +22,7 @@ namespace WebApiShop.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<productDto>>> Get(
+        public async Task<ActionResult<List<ProductCreateDTO>>> Get(
                                               int? categoryId,
                                               string? color,
                                               float? minPrice,
@@ -43,22 +43,38 @@ namespace WebApiShop.Controllers
             return Ok(products);
         }
 
+        //[HttpPost]
+        //public async Task<ActionResult<ProductCreateDTO>> Post([FromBody] ProductCreateDTO dto)
+        //{
+        //    var created = await _productService.AddProductAsync(dto);
+
+        //    return CreatedAtAction(
+        //        nameof(Get),
+        //        new { id = created.ProductId },
+        //        created
+        //    );
+        //}
         [HttpPost]
         public async Task<ActionResult<ProductCreateDTO>> Post([FromBody] ProductCreateDTO dto)
         {
             var created = await _productService.AddProductAsync(dto);
-
-            return CreatedAtAction(
-                nameof(Get),
-                new { id = created.ProductId },
-                created
-            );
+            // פשוט להחזיר Ok עם המוצר שנוצר
+            return Ok(created);
         }
-            
 
-   
+        [HttpPut("{id}")]
+        public async Task<ActionResult> Put(int id, [FromBody] ProductCreateDTO dto)
+        {
+            await _productService.UpdateProductAsync(id, dto);
+            return NoContent();
+        }
 
-
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            await _productService.DeleteProductAsync(id);
+            return NoContent();
+        }
 
     }
 }

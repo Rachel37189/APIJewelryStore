@@ -11,15 +11,23 @@ namespace Services
     {       
        public AutoMapper() {
 
+      
+
             CreateMap<User, UserDto>().ReverseMap();
-            CreateMap<Product, productDto>().ReverseMap();
             CreateMap<Order, OrderDto>().ReverseMap();
             CreateMap<Category, CategoryDto>().ReverseMap();
             CreateMap<OrderItem, OrderItemDto>().ReverseMap();
-            CreateMap<ProductCreateDTO,Product>().ReverseMap();
-            //CreateMap<Entities.Product, DTOs.ProductCreateDTO>().ReverseMap();
-            //   CreateMap<List<Category>, List<CategoryDto>>().ReverseMap();
 
+            // מיפוי מידות - חשוב מאוד ל-POST ו-GET
+            CreateMap<WebApiShop.Entities.Size, SizeDTO>().ReverseMap();
+
+            // מיפוי מוצר - הפשוט ביותר
+            // בזכות ה-Include(p => p.Sizes) ברפוזיטורי,
+            // AutoMapper יזהה לבד את רשימת המידות וימפה אותה
+            CreateMap<Product, ProductCreateDTO>().ReverseMap();
+
+            // אם יש לך גם productDto (באות קטנה), תשאירי אותו:
+            CreateMap<Product, productDto>().ReverseMap();
         }
     }
 }

@@ -72,11 +72,16 @@ public partial class JewelryStoreContext : DbContext
                 .HasConstraintName("FK_Product_Category");
         });
 
+        // הגדרת טבלת Sizes
         modelBuilder.Entity<Size>(entity =>
         {
-            entity.HasOne(d => d.Product).WithMany()
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Size_Product");
+            entity.HasKey(e => e.SizeId); // הגדרת מפתח ראשי
+
+            // הגדרת הקשר: לכל מוצר יש הרבה מידות
+            entity.HasOne(d => d.Product)
+                  .WithMany(p => p.Sizes)
+                  .HasForeignKey(d => d.ProductId)
+                  .OnDelete(DeleteBehavior.Cascade); // אם מוצר נמחק, המידות נמחקות איתו
         });
 
         modelBuilder.Entity<User>(entity =>

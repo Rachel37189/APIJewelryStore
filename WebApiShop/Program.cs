@@ -53,12 +53,12 @@ if (app.Environment.IsDevelopment())
 
 
 // Configure the HTTP request pipeline.
+app.UseCors("AllowAngular");
 
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 
-app.UseCors("AllowAngular");
 
 app.UseAuthorization();
 

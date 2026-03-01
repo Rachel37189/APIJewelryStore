@@ -58,4 +58,6 @@ public partial class Product
 
     [InverseProperty("Product")]
     public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
+    //[InverseProperty("Product")]
+    public virtual ICollection<WebApiShop.Entities.Size> Sizes { get; set; } = new List<WebApiShop.Entities.Size>();
 }

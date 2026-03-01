@@ -22,6 +22,13 @@ namespace DTOs
     bool IsClassic,
     bool IsTrendy,
     bool IsPearls,
-    bool IsStudio
-    );
+    bool IsStudio,
+    List<SizeDTO> Sizes
+    )
+    {
+        // הבנאי הריק הזה יפתור את כל הצרות של AutoMapper
+        public ProductCreateDTO() : this(0, "", "", "", 0, 0, "", DateOnly.FromDateTime(DateTime.Now), "", null, false, false, false, false, false, new List<SizeDTO>())
+        {
+        }
+    }
 }
