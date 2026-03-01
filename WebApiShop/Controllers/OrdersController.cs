@@ -23,9 +23,10 @@ namespace WebApiShop.Controllers
 
         // GET: api/<UsersController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<ActionResult<IEnumerable<OrderDto>>> Get()
         {
-            return new string[] { "value1", "value2" };
+            var orders = await _orderService.GetAllOrders(); // צריכה להוסיף את המתודה הזו ב-Service
+            return Ok(orders);
         }
 
         // GET api/<UsersController>/5
@@ -51,6 +52,19 @@ namespace WebApiShop.Controllers
 
         }
 
-   
+        // PUT: api/Orders/5/status
+        [HttpPut("{id}/status")]
+        public async Task<IActionResult> UpdateStatus(int id, [FromBody] int newStatus)
+        {
+            var success = await _orderService.UpdateStatus(id, newStatus);
+
+            if (!success)
+            {
+                return NotFound($"Order with ID {id} not found.");
+            }
+
+            return Ok(new { message = "Status updated successfully", status = newStatus });
+        }
+
     }
 }

@@ -2,14 +2,10 @@
 {
     public record OrderDto
     (
-        int orderId,
-        DateOnly? OrderDate,
-
-        double OrderSum ,
-
-        int UserId
-
-    //    ICollection<OrderItem> OrderItems= new List<OrderItem>()
-
+        int OrderId = 0,
+        DateOnly? OrderDate = null,
+        double OrderSum = 0, // שימי לב: ב-Entity זה נקרא TotalPrice
+        int UserId = 0,
+        int Status = 0
     );
 }

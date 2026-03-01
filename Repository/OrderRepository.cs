@@ -28,5 +28,20 @@ namespace Repository
             return order;
         }
 
+        public async Task<bool> UpdateOrderStatus(int orderId, int newStatus)
+        {
+            var order = await _JewelryStore.Orders.FindAsync(orderId);
+            if (order == null) return false;
+
+            order.Status = newStatus;
+            await _JewelryStore.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<List<Order>> GetAllOrders()
+        {
+            return await _JewelryStore.Orders.ToListAsync();
+        }
+
     }
 }

@@ -7,5 +7,8 @@ namespace Services
     {
         Task<OrderDto> addOrder(Order order);
         Task<OrderDto> GetOrderById(int id);
+
+        Task<bool> UpdateStatus(int id, int status);
+        Task<IEnumerable<OrderDto>> GetAllOrders();
     }
 }

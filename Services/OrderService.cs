@@ -10,7 +10,16 @@ namespace Services
         IOrderRepository _orderRepository;
        // AutoMapper _mapper;
         IMapper _mapper;
+        public async Task<IEnumerable<OrderDto>> GetAllOrders()
+        {
+            // 1. שליפת כל הישויות מה-Repository
+            var orders = await _orderRepository.GetAllOrders(); // את צריכה להוסיף את זה ב-Repository (ראי מטה)
 
+            // 2. המרה של רשימת הישויות לרשימה של DTOs בעזרת AutoMapper
+            var ordersDto = _mapper.Map<IEnumerable<OrderDto>>(orders);
+
+            return ordersDto;
+        }
         public OrderService(IOrderRepository orderRepository, IMapper mapper)
         {
             _orderRepository = orderRepository;
@@ -29,6 +38,12 @@ namespace Services
             OrderDto orderDto = _mapper.Map<OrderDto>(order2);
             return orderDto;
         }
+
+        public async Task<bool> UpdateStatus(int id, int status)
+        {
+            return await _orderRepository.UpdateOrderStatus(id, status);
+        }
+
 
     }
 }
