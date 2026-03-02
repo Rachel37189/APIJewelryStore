@@ -6,23 +6,7 @@ using System.Threading.Tasks;
 
 namespace DTOs
 {
-    //public record UserDto
-    //(
-    //    int id,
-    //    string UserEmail,
-
-    //    string FirstName,
-
-    //    string LastName
-    //);
-
-    //public record UserDto
-    //{
-    //    public int Id { get; init; }
-    //    public string UserEmail { get; init; }
-    //    public string FirstName { get; init; }
-    //    public string LastName { get; init; }
-    //}
+    
 
         public class UserDto
         {

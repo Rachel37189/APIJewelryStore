@@ -43,5 +43,14 @@ namespace Repository
             return await _JewelryStore.Orders.ToListAsync();
         }
 
+        public async Task<List<Order>> GetOrdersByUserId(int userId)
+        {
+            return await _JewelryStore.Orders
+                .Include(o => o.OrderItems) // טעינת פריטי ההזמנה
+                .ThenInclude(oi => oi.Product) // טעינת פרטי המוצר (בשביל השם שלו)
+                .Where(o => o.UserId == userId)
+                .ToListAsync();
+        }
+
     }
 }

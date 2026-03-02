@@ -44,6 +44,18 @@ namespace Services
             return await _orderRepository.UpdateOrderStatus(id, status);
         }
 
+        //public async Task<List<Order>> GetOrdersByUserId(int userId)
+        //{
+        //    return await _orderRepository.GetOrdersByUserId(userId);
+        //}
 
+        public async Task<IEnumerable<OrderDto>> GetOrdersByUserId(int userId)
+        {
+            // שליפה מה-Repository (שימי לב שצריך להוסיף את הפונקציה גם שם)
+            var orders = await _orderRepository.GetOrdersByUserId(userId);
+
+            // מיפוי לרשימת DTOs
+            return _mapper.Map<IEnumerable<OrderDto>>(orders);
+        }
     }
 }

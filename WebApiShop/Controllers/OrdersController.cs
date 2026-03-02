@@ -32,16 +32,23 @@ namespace WebApiShop.Controllers
         //    return Ok(orders);
         //}
 
+        //[HttpGet]
+        //public async Task<ActionResult<IEnumerable<OrderDto>>> Get()
+        //{
+        //    // 1. שליפת הנתונים הגולמיים מה-DB (כאן TotalPrice מלא)
+        //    var orders = await _orderService.GetAllOrders();
+
+        //    // 2. הפעלת הקסם של AutoMapper - העברה מ-Order ל-OrderDto
+        //    var ordersDto = _mapper.Map<IEnumerable<OrderDto>>(orders);
+
+        //    // 3. החזרת ה-DTO הממופה (כאן OrderSum יהיה שווה ל-TotalPrice)
+        //    return Ok(ordersDto);
+        //}
+
         [HttpGet]
         public async Task<ActionResult<IEnumerable<OrderDto>>> Get()
         {
-            // 1. שליפת הנתונים הגולמיים מה-DB (כאן TotalPrice מלא)
-            var orders = await _orderService.GetAllOrders();
-
-            // 2. הפעלת הקסם של AutoMapper - העברה מ-Order ל-OrderDto
-            var ordersDto = _mapper.Map<IEnumerable<OrderDto>>(orders);
-
-            // 3. החזרת ה-DTO הממופה (כאן OrderSum יהיה שווה ל-TotalPrice)
+            var ordersDto = await _orderService.GetAllOrders();
             return Ok(ordersDto);
         }
 
@@ -56,7 +63,22 @@ namespace WebApiShop.Controllers
             return Ok(order);
         }
 
+        // GET: api/Orders/user/5
+        [HttpGet("user/{userId}")]
+        public async Task<ActionResult<IEnumerable<OrderDto>>> GetOrdersByUserId(int userId)
+        {
+            // 1. קריאה לשירות שיביא את ההזמנות של המשתמש הספציפי
+            var orders = await _orderService.GetOrdersByUserId(userId);
 
+            // 2. בדיקה אם קיימות הזמנות
+            if (orders == null || !orders.Any())
+            {
+                return Ok(new List<OrderDto>()); // מחזירים רשימה ריקה אם אין הזמנות
+            }
+
+            // 3. החזרת הנתונים (הם כבר ממופים ל-DTO בתוך ה-Service)
+            return Ok(orders);
+        }
 
 
         // POST api/<UsersController>

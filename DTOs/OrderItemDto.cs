@@ -6,12 +6,27 @@ using System.Threading.Tasks;
 
 namespace DTOs
 {
-    public record OrderItemDto
-    (
-        int OrderId,
+    public class OrderItemDto
+    {
+        public int OrderId { get; set; }
 
-        double? Quantity,
 
-        string ProductName
-    );
+        public int Quantity { get; set; }
+
+
+        public string ProductName { get; set; }
+
+
+        public double Price { get; set; }   // הוספנו מחיר
+
+
+        public string Image { get; set; }   // הוספנו תמונה
+
+
+        public double Size { get; set; }
+
+        public OrderItemDto() { } 
+    }
+
+
 }

@@ -10,5 +10,7 @@ namespace Services
 
         Task<bool> UpdateStatus(int id, int status);
         Task<IEnumerable<OrderDto>> GetAllOrders();
+
+        Task<IEnumerable<OrderDto>> GetOrdersByUserId(int userId);
     }
 }

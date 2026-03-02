@@ -9,5 +9,9 @@ namespace Repository
         Task<bool> UpdateOrderStatus(int orderId, int newStatus);
 
         Task<List<Order>> GetAllOrders();
+
+        Task<List<Order>> GetOrdersByUserId(int userId);
+
+
     }
 }
