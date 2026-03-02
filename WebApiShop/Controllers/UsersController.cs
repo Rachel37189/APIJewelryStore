@@ -54,24 +54,66 @@ namespace WebApiShop.Controllers
 
         }
 
+        //[HttpPost("Login")]
+        //public async Task<ActionResult<UserDto>> Login([FromBody] UserLoginDto loginData)
+        //{
+        //    UserDto _user = await _userService.login(user);
+        //    if (_user == null)
+        //    {
+        //        _logger.LogInformation("Login failed: UserName={UserEmail},FirstName={FirstName},LastName={LastName}", user?.Email, user?.FirstName, user?.LastName);
+        //        return NoContent();
+
+        //    }
+
+        //    _logger.LogInformation("Login success: UserName={UserEmail},FirstName={FirstName},LastName={LastName}",
+        //    _user.UserEmail, _user.FirstName, _user.LastName);
+        //    return Ok(_user);
+
+        //}
+
+        //[HttpPost("Login")]
+        //public async Task<ActionResult<UserDto>> Login([FromBody] UserLoginDto loginData)
+        //{
+        //    // אנחנו יוצרים אובייקט User זמני רק כדי להעביר אותו ל-Service שמצפה ל-User
+        //    // או לחילופין מעדכנים את ה-Service (ראי סעיף הבא)
+        //    User userToLogin = new User
+        //    {
+        //        Email = loginData.Email,
+        //        Password = loginData.Password
+        //    };
+
+        //    UserDto _user = await _userService.login(userToLogin);
+
+        //    if (_user == null)
+        //    {
+        //        // שימי לב: בלוגין שנכשל אין לנו FirstName/LastName, לכן נתעד רק אימייל
+        //        _logger.LogInformation("Login failed for Email: {UserEmail}", loginData.Email);
+        //        return Unauthorized("אימייל או סיסמה שגויים"); // עדיף להחזיר 401 או 400 ולא NoContent
+        //    }
+
+        //    _logger.LogInformation("Login success: Email={UserEmail}, Name={FirstName} {LastName}",
+        //        _user.UserEmail, _user.FirstName, _user.LastName);
+
+        //    return Ok(_user);
+        //}
+
         [HttpPost("Login")]
-        public async Task<ActionResult<UserDto>> Login([FromBody] User user)
+        public async Task<ActionResult<UserDto>> Login([FromBody] UserLoginDto loginData) // <--- וודאי שכתוב UserLoginDto
         {
-            UserDto _user = await _userService.login(user);
-            if (_user == null)
+            // יצירת אובייקט זמני עבור ה-Service
+            User userToLogin = new User
             {
-                _logger.LogInformation("Login failed: UserName={UserEmail},FirstName={FirstName},LastName={LastName}", user?.Email, user?.FirstName, user?.LastName);
-                return NoContent();
+                Email = loginData.Email,
+                Password = loginData.Password
+            };
 
-            }
+            UserDto _user = await _userService.login(userToLogin);
 
-            _logger.LogInformation("Login success: UserName={UserEmail},FirstName={FirstName},LastName={LastName}",
-            _user.UserEmail, _user.FirstName, _user.LastName);
+            if (_user == null) return Unauthorized("פרטים שגויים");
+
             return Ok(_user);
-
         }
 
-      
         // PUT api/<UsersController>/5
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] User user)

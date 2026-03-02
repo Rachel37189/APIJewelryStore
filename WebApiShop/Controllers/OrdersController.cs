@@ -5,6 +5,7 @@ using Entities;
 using Repository;
 using Services;
 using DTOs;
+using AutoMapper;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -16,17 +17,32 @@ namespace WebApiShop.Controllers
     {
 
         IOrderService _orderService;
-        public OrdersController(IOrderService orderService)
+        IMapper _mapper;
+        public OrdersController(IOrderService orderService,IMapper mapper)
         {
             _orderService = orderService;
+            _mapper = mapper;
         }
 
         // GET: api/<UsersController>
+        //[HttpGet]
+        //public async Task<ActionResult<IEnumerable<OrderDto>>> Get()
+        //{
+        //    var orders = await _orderService.GetAllOrders(); // צריכה להוסיף את המתודה הזו ב-Service
+        //    return Ok(orders);
+        //}
+
         [HttpGet]
         public async Task<ActionResult<IEnumerable<OrderDto>>> Get()
         {
-            var orders = await _orderService.GetAllOrders(); // צריכה להוסיף את המתודה הזו ב-Service
-            return Ok(orders);
+            // 1. שליפת הנתונים הגולמיים מה-DB (כאן TotalPrice מלא)
+            var orders = await _orderService.GetAllOrders();
+
+            // 2. הפעלת הקסם של AutoMapper - העברה מ-Order ל-OrderDto
+            var ordersDto = _mapper.Map<IEnumerable<OrderDto>>(orders);
+
+            // 3. החזרת ה-DTO הממופה (כאן OrderSum יהיה שווה ל-TotalPrice)
+            return Ok(ordersDto);
         }
 
         // GET api/<UsersController>/5
@@ -39,6 +55,10 @@ namespace WebApiShop.Controllers
                    return NoContent();
             return Ok(order);
         }
+
+
+
+
         // POST api/<UsersController>
         [HttpPost]
         public async Task<ActionResult<OrderDto>> Post([FromBody] Order order)

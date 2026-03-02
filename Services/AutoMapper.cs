@@ -11,9 +11,13 @@ namespace Services
     {       
        public AutoMapper() {
 
-      
 
-            CreateMap<User, UserDto>().ReverseMap();
+
+            //CreateMap<User, UserDto>().ReverseMap();
+            // בתוך ה-Constructor של ה-AutoMapper Profile
+            CreateMap<User, UserDto>()
+                .ForMember(dest => dest.UserEmail, opt => opt.MapFrom(src => src.Email))
+                .ReverseMap();
             //CreateMap<Order, OrderDto>().ReverseMap();
             CreateMap<Category, CategoryDto>().ReverseMap();
             //CreateMap<OrderItem, OrderItemDto>().ReverseMap();
@@ -23,10 +27,9 @@ namespace Services
              .ReverseMap();
 
             CreateMap<Order, OrderDto>()
-                .ForMember(dest => dest.OrderSum, opt => opt.MapFrom(src => src.TotalPrice))
-                .ReverseMap()
-                .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom(src => src.OrderSum));
-            // מיפוי מידות - חשוב מאוד ל-POST ו-GET
+    .ForMember(dest => dest.OrderSum, opt => opt.MapFrom(src => src.TotalPrice)) // מיפוי מה-DB ל-DTO
+    .ReverseMap()
+    .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom(src => src.OrderSum));  // מיפוי מידות - חשוב מאוד ל-POST ו-GET
             CreateMap<WebApiShop.Entities.Size, SizeDTO>().ReverseMap();
 
             // מיפוי מוצר - הפשוט ביותר

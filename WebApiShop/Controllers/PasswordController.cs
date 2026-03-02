@@ -21,7 +21,12 @@ namespace WebApiShop.Controllers
         {
             return new string[] { "value1", "value2" };
         }
-
+        [HttpGet("check/{pass}")]
+        public ActionResult<int> GetPasswordStrength(string pass)
+        {
+            var result = _pass.Level(pass);
+            return Ok(result.Strength);
+        }
         // GET api/<PasswordController>/5
         [HttpGet("{pass}")]
         public void Get(string pass)
