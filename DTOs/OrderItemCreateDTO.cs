@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 
 namespace DTOs
 {
-    public record OrderItemDTO
+    public record OrderItemCreateDTO
     (
         int ProductId,
         int Quantity,
-        float Size,
-        float PriceAtPurchase
-
+        double Size
     );
 }

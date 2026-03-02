@@ -6,18 +6,25 @@ using System.Threading.Tasks;
 
 namespace DTOs
 {
-    public record OrderDTO
-    (
-        int OrderId ,
+    //public record OrderDTO
+    //(
+    //    int OrderId ,
 
-        DateOnly? OrderDate ,
+    //    DateOnly? OrderDate ,
 
-         double OrderSum,
+    //     double OrderSum,
 
-         int UserId 
+    //     int UserId 
 
-        // virtual ICollection<OrderItemDTO> OrderItems { get; set; } = new List<OrderItemDTO>();
 
-       // public virtual User User { get; set; }
-    );
+    //);
+    public record OrderDTO(
+    int OrderId,
+        DateOnly OrderDate,
+        int Status,
+        int UserId,
+        string ShippingMethod,
+        double TotalPrice,
+        List<OrderItemDTO> Items
+);
 }

@@ -14,10 +14,9 @@ namespace DTOs
 
          string ShortDescription,
 
-         double ProductPrice
+         double ProductPrice,
 
-
-
+         string Image1
 
     );
 }

@@ -35,13 +35,17 @@ namespace Repository
                 if (categoryId.HasValue)
                     q = q.Where(p => p.CategoryId == categoryId.Value);
 
-                if (!string.IsNullOrWhiteSpace(color))
-                {
-                    var c = color.Trim().ToLower();
-                    q = q.Where(p => p.Color.ToLower() == c);
-                }
-
-                if (minPrice.HasValue)
+            //if (!string.IsNullOrWhiteSpace(color))
+            //{
+            //    var c = color.Trim().ToLower();
+            //    q = q.Where(p => p.Color.ToLower() == c);
+            //}
+            if (!string.IsNullOrWhiteSpace(color))
+            {
+                var c = color.Trim();
+                q = q.Where(p => p.Color != null && p.Color.Trim() == c);
+            }
+            if (minPrice.HasValue)
                     q = q.Where(p => p.ProductPrice >= minPrice.Value);
 
                 if (maxPrice.HasValue)
@@ -80,6 +84,17 @@ namespace Repository
             await _jewelryStoreContext.SaveChangesAsync();
             return product;
         }
+
+       
+         
+
+            public async Task<Product?> GetByIdWithSizesAsync(int id)
+            {
+                return await _jewelryStoreContext.Products
+                    .Include(p => p.Sizes)   // שנהי אם הניווט נקרא אחרת
+                    .FirstOrDefaultAsync(p => p.ProductId == id);
+            }
+        
     }
 
 

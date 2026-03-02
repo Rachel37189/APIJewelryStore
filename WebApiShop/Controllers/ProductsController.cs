@@ -45,6 +45,25 @@ namespace WebApiShop.Controllers
 
             return Ok(products);
         }
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<ProductDetailsDto>> GetById(int id)
+        {
+            try
+            {
+                var product = await _productService.GetProductDetailsAsync(id);
+
+                if (product == null)
+                {
+                    return NotFound($"Product with id {id} not found");
+                }
+
+                return Ok(product);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Error retrieving product: " + ex.Message);
+            }
+        }
         [HttpPost]
         public async Task<ActionResult<ProductCreateDTO>> Post([FromBody] ProductCreateDTO dto)
         {

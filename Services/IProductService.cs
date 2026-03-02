@@ -18,6 +18,6 @@ namespace Services
                 string? sortMode
             );
         Task<ProductCreateDTO> AddProductAsync(ProductCreateDTO dto);
-
+        Task<ProductDetailsDto?> GetProductDetailsAsync(int id);
     }
 }

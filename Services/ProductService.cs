@@ -54,6 +54,27 @@ namespace Services
             return _mapper.Map<ProductCreateDTO>(saved);
         }
 
+        public async Task<ProductDetailsDto?> GetProductDetailsAsync(int id)
+        {
+            var product = await _productRepository.GetByIdWithSizesAsync(id);
+            if (product == null) return null;
+
+            var sizes = product.Sizes
+                .Where(s => s.Amount > 0) // ✅ לא מחזירים 0
+                .Select(s => new ProductSizeDto(s.ProductSize, s.Amount))
+                .ToList();
+
+            return new ProductDetailsDto(
+                product.ProductId,
+                product.ProductName,
+                product.LongDescription ?? "",
+                product.ProductPrice,
+                product.Image1,
+                product.Image2,
+                sizes
+            );
+        }
+
     }
 
     

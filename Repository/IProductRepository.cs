@@ -19,6 +19,7 @@ namespace Repository
             );
         //Task<Product> AddProduct(Product product);
         Task<Product> AddProductAsync(Product product);
+        Task<Product?> GetByIdWithSizesAsync(int id);
     }
 
 }

@@ -40,18 +40,31 @@ namespace WebApiShop.Controllers
         }
         // POST api/<UsersController>
         [HttpPost]
-        public async Task<ActionResult<OrderDTO>> Post([FromBody] OrderDTO order)
-        {
-            OrderDTO _order = await _orderService.addOrder(order);
-            if (_order == null)
-            {
-                return BadRequest();
-            }
-          return CreatedAtAction(nameof(Get), new {id= _order.OrderId }, _order);
-           //return Ok(_order);
+        //public async Task<ActionResult<OrderDTO>> Post([FromBody] OrderDTO order)
+        //{
+        //    OrderDTO _order = await _orderService.addOrder(order);
+        //    if (_order == null)
+        //    {
+        //        return BadRequest();
+        //    }
+        //  return CreatedAtAction(nameof(Get), new {id= _order.OrderId }, _order);
+        //   //return Ok(_order);
 
+        //}
+        [HttpPost]
+        public async Task<ActionResult<OrderDTO>> Post([FromBody] OrderCreateDTO dto)
+        {
+            try
+            {
+                var created = await _orderService.CreateOrderAsync(dto);
+                return CreatedAtAction(nameof(Get), new { id = created.OrderId }, created);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
-       
+
     }
 }
