@@ -25,18 +25,40 @@ namespace Repository
             return user;
         }
 
- 
+
+        //public async Task<User?> updateUser(User user)
+        //{
+        //    var existingUser = await _JewelryStore.Users
+        //        .FirstOrDefaultAsync(u => u.UserId == user.UserId);
+
+        //    if (existingUser == null)
+        //        return null;
+
+        //    existingUser.FirstName = user.FirstName;
+        //    existingUser.LastName = user.LastName;
+        //    existingUser.Email = user.Email;
+
+        //    await _JewelryStore.SaveChangesAsync();
+        //    return existingUser;
+        //}
+
         public async Task<User?> updateUser(User user)
         {
             var existingUser = await _JewelryStore.Users
                 .FirstOrDefaultAsync(u => u.UserId == user.UserId);
 
-            if (existingUser == null)
-                return null;
+            if (existingUser == null) return null;
 
+            // עדכון השדות הקיימים
             existingUser.FirstName = user.FirstName;
             existingUser.LastName = user.LastName;
             existingUser.Email = user.Email;
+
+            // הוספת השדות החדשים שהיו חסרים:
+            existingUser.Phone = user.Phone;
+            existingUser.City = user.City;
+            existingUser.Street = user.Street;
+            existingUser.HouseNumber = user.HouseNumber;
 
             await _JewelryStore.SaveChangesAsync();
             return existingUser;

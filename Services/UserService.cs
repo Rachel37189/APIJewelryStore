@@ -34,10 +34,43 @@ namespace Services
             UserDto userDto = _mapper.Map<UserDto>(user1);
             return userDto;
         }
-        public void updateUser(int id, User user)
-        {
-            _userRepository.updateUser(user);
+        //public void updateUser(int id, User user)
+        //{
+        //    _userRepository.updateUser(user);
 
+        //}
+
+        //public async Task<UserUpdateDto> updateUser(int id, UserUpdateDto userDto)
+        //{
+        //    // המרה מ-DTO ל-Entity
+        //    User userEntity = _mapper.Map<User>(userDto);
+        //    userEntity.UserId = id; // וידוא ה-ID מהנתיב
+
+        //    User updatedUser = await _userRepository.updateUser(userEntity);
+
+        //    // החזרה של הנתונים המעודכנים כ-DTO
+        //    return _mapper.Map<UserUpdateDto>(updatedUser);
+        //}
+
+        public async Task<UserDto> updateUser(int id, UserDto userDto)
+        {
+            // 1. שליפת המשתמש הקיים מה-DB (כדי לא לאבד את האימייל והסיסמה)
+            User existingUser = await _userRepository.GetUserById(id);
+            if (existingUser == null) return null;
+
+            // 2. עדכון רק של השדות המותרים
+            existingUser.FirstName = userDto.FirstName;
+            existingUser.LastName = userDto.LastName;
+            existingUser.Phone = userDto.Phone;
+            existingUser.City = userDto.City;
+            existingUser.Street = userDto.Street;
+            existingUser.HouseNumber = userDto.HouseNumber;
+
+            // 3. שמירה דרך ה-Repository
+            User updatedUser = await _userRepository.updateUser(existingUser);
+
+            // 4. החזרה כ-DTO
+            return _mapper.Map<UserDto>(updatedUser);
         }
         public async Task<UserDto> login(User user)
         {

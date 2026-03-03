@@ -10,13 +10,18 @@ namespace DTOs
 
         public class UserDto
         {
-            // בנאי ריק מפורש כדי ש-AutoMapper לא יתבלבל
-            public UserDto() { }
+        // בנאי ריק מפורש כדי ש-AutoMapper לא יתבלבל
+        public UserDto() { }
 
-            public int Id { get; set; }
-            public string UserEmail { get; set; }
-            public string FirstName { get; set; }
-            public string LastName { get; set; }
-        }
+        public int Id { get; set; } // זה ה-UserId מה-DB
+        public string UserEmail { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public int Phone { get; set; }
+        public string City { get; set; }
+        public string Street { get; set; }
+        public int HouseNumber { get; set; }
+        public bool IsAdmin { get; set; }
+    }
     }
 

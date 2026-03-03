@@ -18,6 +18,7 @@ namespace Services
             CreateMap<User, UserDto>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.UserId))
                 .ForMember(dest => dest.UserEmail, opt => opt.MapFrom(src => src.Email))
+                .ForMember(dest => dest.IsAdmin, opt => opt.MapFrom(src => src.IsAdmin)) // הוספת המיפוי המפורש
                 .ReverseMap();
             //CreateMap<Order, OrderDto>().ReverseMap();
             CreateMap<Category, CategoryDto>().ReverseMap();
@@ -46,7 +47,8 @@ namespace Services
             // בזכות ה-Include(p => p.Sizes) ברפוזיטורי,
             // AutoMapper יזהה לבד את רשימת המידות וימפה אותה
             CreateMap<Product, ProductCreateDTO>().ReverseMap();
-
+            // בתוך הקונסטרקטור של AutoMapper.cs
+            CreateMap<UserUpdateDto, User>().ReverseMap();
             // אם יש לך גם productDto (באות קטנה), תשאירי אותו:
             CreateMap<Product, productDto>().ReverseMap();
         }

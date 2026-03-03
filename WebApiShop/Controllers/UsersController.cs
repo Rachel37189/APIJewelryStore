@@ -114,12 +114,28 @@ namespace WebApiShop.Controllers
             return Ok(_user);
         }
 
-        // PUT api/<UsersController>/5
+        //// PUT api/<UsersController>/5
+        //[HttpPut("{id}")]
+        //public IActionResult Put(int id, [FromBody] User user)
+        //{
+        //    _userService.updateUser(id,user);
+        //    return Ok(user);
+        //}
+
+        //[HttpPut("{id}")]
+        //public async Task<ActionResult<UserUpdateDto>> Put(int id, [FromBody] UserUpdateDto userDto)
+        //{
+        //    var result = await _userService.updateUser(id, userDto);
+        //    if (result == null) return NotFound();
+        //    return Ok(result);
+        //}
+
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] User user)
+        public async Task<ActionResult<UserDto>> Put(int id, [FromBody] UserDto userDto)
         {
-            _userService.updateUser(id,user);
-            return Ok(user);
+            var result = await _userService.updateUser(id, userDto);
+            if (result == null) return NotFound();
+            return Ok(result);
         }
 
         // DELETE api/<UsersController>/5
