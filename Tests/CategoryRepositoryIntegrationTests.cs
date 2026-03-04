@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,21 @@ namespace Tests
     {
          
         private readonly WebApiShop_215602996Context _context;
+=======
+﻿using Entities;
+using Repository;
+
+using Xunit;
+using Repository;
+using Entities;
+
+namespace Tests
+{
+    // שימוש ב-Fixture
+    public class CategoryRepositoryIntegrationTests : IClassFixture<DbFixture>
+    {
+        private readonly WebApiShop216328971Context _context;
+>>>>>>> 234722a0f9ae8bbfeb6eba645db360cb10d20bca
         private readonly CategoryRepository _repository;
 
         public CategoryRepositoryIntegrationTests(DbFixture fixture)
@@ -39,7 +55,12 @@ namespace Tests
             Assert.Contains(result, c => c.CategoryName == "TestCat");
         }
         #endregion
+<<<<<<< HEAD
         #region UnHappyTests
+=======
+
+        #region UnhappyTests
+>>>>>>> 234722a0f9ae8bbfeb6eba645db360cb10d20bca
         [Fact]
         public async Task GetCategories_WhenEmpty_ReturnsEmptyList()
         {
@@ -48,11 +69,18 @@ namespace Tests
             Assert.NotNull(result);
             Assert.Empty(result);
         }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 234722a0f9ae8bbfeb6eba645db360cb10d20bca
         #endregion
     }
 
 
 
 }
+<<<<<<< HEAD
 
   
+=======
+>>>>>>> 234722a0f9ae8bbfeb6eba645db360cb10d20bca

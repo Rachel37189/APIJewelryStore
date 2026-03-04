@@ -8,10 +8,18 @@ using Repository;
 
 namespace Tests
 {
+<<<<<<< HEAD
     public class ProductRepositoryIntegrationTests : IClassFixture<DbFixture>
     {
 
         private readonly WebApiShop_215602996Context _context;
+=======
+   
+
+    public class ProductRepositoryIntegrationTests : IClassFixture<DbFixture>
+    {
+        private readonly WebApiShop216328971Context _context;
+>>>>>>> 234722a0f9ae8bbfeb6eba645db360cb10d20bca
         private readonly ProductRepository _repository;
 
         public ProductRepositoryIntegrationTests(DbFixture fixture)
@@ -20,7 +28,11 @@ namespace Tests
             _repository = new ProductRepository(_context);
             _context.ChangeTracker.Clear();
         }
+<<<<<<< HEAD
         #region HappyTest
+=======
+        #region happy tests
+>>>>>>> 234722a0f9ae8bbfeb6eba645db360cb10d20bca
         [Fact]
         public async Task GetProducts_ShouldReturnAllProducts()
         {
@@ -30,6 +42,7 @@ namespace Tests
             await _context.SaveChangesAsync();
 
             // Act
+<<<<<<< HEAD
             var result = await _repository.GetProducts(null, null, null, null, null);
 
             // Assert
@@ -51,3 +64,27 @@ namespace Tests
         }
     }
 
+=======
+            var result = await _repository.GetProducts(null, null, 0, 0, null,null,null,null);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Contains(result.Items, p => p.ProductName == "TestProduct");
+        }
+        #endregion
+
+        #region unhappy tests
+
+        [Fact]
+        public async Task GetProducts_WhenNoProducts_ReturnsEmptyList()
+        {
+            var result = await _repository.GetProducts(null, null, 0, 0, null, null, null, null);
+
+            Assert.NotNull(result);
+            Assert.Empty(result.Items);
+        }
+
+        #endregion
+    }
+}
+>>>>>>> 234722a0f9ae8bbfeb6eba645db360cb10d20bca

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DTOs
 {
-    public record ProductDetailsDto(
+    public record ProductDetailsDTO(
     int Id,
     string Name,
     string longDescription,

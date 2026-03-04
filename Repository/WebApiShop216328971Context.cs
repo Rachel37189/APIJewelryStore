@@ -7,10 +7,12 @@ using System.Collections.Generic;
 
 namespace Repository;
 
-public partial class WebApiShop_215602996Context : DbContext
+public partial class WebApiShop216328971Context : DbContext
 {
-    public WebApiShop_215602996Context() { }
-    public WebApiShop_215602996Context(DbContextOptions<WebApiShop_215602996Context> options)
+    public WebApiShop216328971Context()
+    {
+    }
+    public WebApiShop216328971Context(DbContextOptions<WebApiShop216328971Context> options)
         : base(options)
     {
     }
@@ -34,17 +36,17 @@ public partial class WebApiShop_215602996Context : DbContext
                 .IsRequired()
                 .HasMaxLength(30)
                 .IsFixedLength()
-                .HasColumnName("Category_name");
+                .HasColumnName("Category_Name");
         });
 
         modelBuilder.Entity<Order>(entity =>
         {
             entity.Property(e => e.OrderId).HasColumnName("Order_Id");
             entity.Property(e => e.OrderDate).HasColumnName("Order_Date");
-            entity.Property(e => e.TotalPrice).HasColumnName("Order_sum");
+            entity.Property(e => e.TotalPrice).HasColumnName("Oreder_Sum");
             entity.Property(e => e.UserId).HasColumnName("User_Id");
 
-            entity.HasOne(d => d.User).WithMany(p => p.Orders)
+            entity.HasOne<User>().WithMany(p => p.Orders)
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Orders_Users");
@@ -66,7 +68,7 @@ public partial class WebApiShop_215602996Context : DbContext
             entity.HasOne(d => d.Product).WithMany(p => p.OrderItems)
                 .HasForeignKey(d => d.ProductId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Order_Item_Products");
+                .HasConstraintName("FK_Oreder_Item_Products");
         });
 
         modelBuilder.Entity<Product>(entity =>
@@ -84,18 +86,16 @@ public partial class WebApiShop_215602996Context : DbContext
 
             entity.HasOne(d => d.Category).WithMany(p => p.Products)
                 .HasForeignKey(d => d.CategoryId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Categories_Products");
         });
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.Property(e => e.UserId).HasColumnName("id");
             entity.Property(e => e.FirstName)
-                .HasMaxLength(20)
+                .HasMaxLength(30)
                 .IsFixedLength();
             entity.Property(e => e.LastName)
-                .HasMaxLength(20)
+                .HasMaxLength(40)
                 .IsFixedLength();
             entity.Property(e => e.Password)
                 .IsRequired()
@@ -103,7 +103,7 @@ public partial class WebApiShop_215602996Context : DbContext
                 .IsFixedLength();
             entity.Property(e => e.Email)
                 .IsRequired()
-                .HasMaxLength(50)
+                .HasMaxLength(30)
                 .IsFixedLength();
         });
 

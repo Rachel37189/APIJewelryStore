@@ -6,7 +6,11 @@
     const pass = document.querySelector("#password");
 
     const postData = {
+<<<<<<< HEAD
     UserName: userN.value,
+=======
+    UserEmail: userN.value,
+>>>>>>> 234722a0f9ae8bbfeb6eba645db360cb10d20bca
     FirstName: fName.value,
     LastName: lName.value,
     Password: pass.value,
@@ -22,6 +26,7 @@
 });
 
     const dataPost = await responsePost.json();
+<<<<<<< HEAD
     sessionStorage.setItem("user", JSON.stringify(dataPost))
     if (responsePost.status == 201)
         alert("משתמש נוסף בהצלחה");
@@ -30,10 +35,20 @@
     else
         alert("תהליך ההרשמה נכשל...  נסה שוב");
     
+=======
+    sessionStorage.setItem("user", JSON.stringify(dataPost));
+    if (responsePost.status==201)
+        alert("משתמש נוסף בהצלחה");
+    else if (responsePost.status == 400)
+        alert("סיסמא חלשה, נסה שנית")
+    else
+        alert("הליך ההרשמה נכשל, אנא נסה שנית 🤗 . ")
+>>>>>>> 234722a0f9ae8bbfeb6eba645db360cb10d20bca
 }
 
 const login = async () => {
     const userN = document.querySelector("#userN").value;
+<<<<<<< HEAD
     const pass = document.querySelector("#pass");
     const postDataLogin = {
 
@@ -41,6 +56,15 @@ const login = async () => {
         FirstName: "",
         LastName: "",
         Password: pass.value,
+=======
+    const pass = document.querySelector("#pass").value;
+    const postDataLogin = {
+
+        UserEmail: userN,
+        FirstName: "",
+        LastName: "",
+        Password: pass,
+>>>>>>> 234722a0f9ae8bbfeb6eba645db360cb10d20bca
         Id: 0
     };
 
@@ -53,7 +77,10 @@ const login = async () => {
 
     });
 
+<<<<<<< HEAD
    
+=======
+>>>>>>> 234722a0f9ae8bbfeb6eba645db360cb10d20bca
     if (responsePostLogin.ok) {
         const dataPostLogin = await responsePostLogin.json();
         sessionStorage.setItem("user", JSON.stringify(dataPostLogin))
@@ -61,10 +88,16 @@ const login = async () => {
         window.location.href = "../Update.html"
     }
     else {
+<<<<<<< HEAD
 
           alert("אופסססססססססס המשתמש לא קיים")
     }
       
+=======
+        alert("אופסססססססססס שם או סיסמא לא קיימים במערכת")
+    }
+   
+>>>>>>> 234722a0f9ae8bbfeb6eba645db360cb10d20bca
 
 
 
