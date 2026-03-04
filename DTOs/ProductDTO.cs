@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace DTOs
 {
-    public record ProductDTO
+    public record productDTO
     (
-         int ProductId,
-
          string ProductName,
 
-         string ShortDescription,
+         double Price,
 
-         double ProductPrice,
+         int? CategoryId,
 
-         string Image1
+         string Description,
+
+         string Category_Name 
 
     );
 }

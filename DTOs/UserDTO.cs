@@ -6,15 +6,22 @@ using System.Threading.Tasks;
 
 namespace DTOs
 {
-    public record UserDTO
-    (
-         int UserId,
+    
 
-         string Email,
+        public class UserDTO
+        {
+        // בנאי ריק מפורש כדי ש-AutoMapper לא יתבלבל
+        public UserDTO() { }
 
-         string FirstName ,
+        public int Id { get; set; } // זה ה-UserId מה-DB
+        public string UserEmail { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public int Phone { get; set; }
+        public string City { get; set; }
+        public string Street { get; set; }
+        public int HouseNumber { get; set; }
+        public bool IsAdmin { get; set; }
+    }
+    }
 
-         string LastName 
-      //  public string Password { get; set; }
-    );
-}

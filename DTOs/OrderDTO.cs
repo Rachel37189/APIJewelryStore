@@ -1,30 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DTOs
+﻿namespace DTOs
 {
-    //public record OrderDTO
+    //public record OrderDto
     //(
-    //    int OrderId ,
-
-    //    DateOnly? OrderDate ,
-
-    //     double OrderSum,
-
-    //     int UserId 
-
-
+    //    int OrderId = 0,
+    //    DateOnly? OrderDate = null,
+    //    double OrderSum = 0,
+    //    int UserId = 0,
+    //    int Status = 0,
+    //    List<OrderItemDto> OrderItems = null // הוספת הרשימה כאן
     //);
-    public record OrderDTO(
-    int OrderId,
-        DateOnly OrderDate,
-        int Status,
-        int UserId,
-        string ShippingMethod,
-        double TotalPrice,
-        List<OrderItemDTO> Items
-);
+
+    public class OrderDTO
+    {
+        public int OrderId { get; set; }
+        public DateOnly? OrderDate { get; set; }
+        public double OrderSum { get; set; }
+        public int UserId { get; set; }
+        public int Status { get; set; }
+        public List<OrderItemDTO> OrderItems { get; set; }// הוספת הרשימה כאן
+    }
 }
