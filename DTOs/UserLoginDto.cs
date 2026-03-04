@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace DTOs
 {
-    public record CategoryDTO
-    (
-        string CategoryName
-
-    );
+    public class UserLoginDTO
+    {
+        public string Email { get; set; }
+        public string Password { get; set; }
+    }
 }

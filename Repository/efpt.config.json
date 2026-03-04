@@ -1,6 +1,10 @@
 ﻿{
    "CodeGenerationMode": 5,
+<<<<<<< HEAD
    "ContextClassName": "WebApiShop_215602996Context",
+=======
+   "ContextClassName": "WebApiShop216328971Context",
+>>>>>>> 234722a0f9ae8bbfeb6eba645db360cb10d20bca
    "ContextNamespace": null,
    "FilterSchemas": false,
    "IncludeConnectionString": false,
