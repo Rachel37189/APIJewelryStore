@@ -186,7 +186,7 @@ namespace WebApiShop.Controllers
         //    return Ok(products);
         //}
         [HttpGet]
-        public async Task<ActionResult<List<productDTO>>> Get(
+        public async Task<ActionResult<List<ProductCreateDTO>>> Get(
                 int? categoryId, string? color, float? minPrice, float? maxPrice,
                 bool? justOnline, bool? isClassic, bool? isTrendy, bool? isPearls,
                 bool? isStudio, string? sortMode)
@@ -233,10 +233,16 @@ namespace WebApiShop.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> Put(int id, [FromBody] ProductCreateDTO dto)
         {
-            await _productService.UpdateProductAsync(id, dto);
-            return NoContent();
+            try
+            {
+                await _productService.UpdateProductAsync(id, dto);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Update failed: " + ex.Message);
+            }
         }
-
         // DELETE: api/Products/5
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)

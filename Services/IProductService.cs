@@ -40,12 +40,32 @@
 //}
 
 
+//using DTOs;
+
+//public interface IProductService
+//{
+//    Task<List<ProductCreateDTO>> GetProductsAsync(int? categoryId, string? color, float? minPrice, float? maxPrice, bool? justOnline, bool? isClassic, bool? isTrendy, bool? isPearls, bool? isStudio, string? sortMode);
+//    Task<ProductCreateDTO> AddProductAsync(ProductCreateDTO dto);
+//    Task<ProductDetailsDTO?> GetProductDetailsAsync(int id); Task UpdateProductAsync(int id, ProductCreateDTO dto);
+//    Task DeleteProductAsync(int id);
+
+//    Task UpdateProductAsync(int id, ProductCreateDTO dto);
+//}
+
+
 using DTOs;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 public interface IProductService
 {
     Task<List<ProductCreateDTO>> GetProductsAsync(int? categoryId, string? color, float? minPrice, float? maxPrice, bool? justOnline, bool? isClassic, bool? isTrendy, bool? isPearls, bool? isStudio, string? sortMode);
+
     Task<ProductCreateDTO> AddProductAsync(ProductCreateDTO dto);
-    Task<ProductDetailsDTO?> GetProductDetailsAsync(int id); Task UpdateProductAsync(int id, ProductCreateDTO dto);
+
+    Task<ProductDetailsDTO?> GetProductDetailsAsync(int id);
+
+    Task UpdateProductAsync(int id, ProductCreateDTO dto);
+
     Task DeleteProductAsync(int id);
 }
