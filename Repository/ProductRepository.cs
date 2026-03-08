@@ -433,9 +433,23 @@ namespace Repository
         // 5. מחיקת מוצר
         public async Task DeleteProductAsync(int id)
         {
-            var product = await _jewelryStoreContext.Products.FindAsync(id);
+            //var product = await _jewelryStoreContext.Products.FindAsync(id);
+            //if (product != null)
+            //{
+            //    _jewelryStoreContext.Products.Remove(product);
+            //    await _jewelryStoreContext.SaveChangesAsync();
+            //}
+            var product = await _jewelryStoreContext.Products
+    .Include(p => p.Sizes)
+    .FirstOrDefaultAsync(p => p.ProductId == id);
+
             if (product != null)
             {
+                if (product.Sizes != null && product.Sizes.Any())
+                {
+                    _jewelryStoreContext.Sizes.RemoveRange(product.Sizes);
+                }
+
                 _jewelryStoreContext.Products.Remove(product);
                 await _jewelryStoreContext.SaveChangesAsync();
             }

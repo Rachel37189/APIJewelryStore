@@ -124,6 +124,17 @@ namespace Services
 
             // מיפוי מידות
             CreateMap<Size, SizeDTO>().ReverseMap();
+
+
+            // מיפוי מוצרים
+            //CreateMap<Product, productDTO>().ReverseMap(); // הגרסה הישנה
+            //CreateMap<Product, ProductCreateDTO>().ReverseMap();
+            //CreateMap<Product, ProductDetailsDTO>()
+            //    .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.ProductId))
+            //    .ForMember(dest => dest.longDescription, opt => opt.MapFrom(src => src.LongDescription))
+            //    .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.ProductPrice))
+            //    .ForMember(dest => dest.Sizes, opt => opt.MapFrom(src => src.Sizes)) // המיפוי של Size ל-ProductSizeDto יופעל כאן אוטומטית
+            //    .ReverseMap();
         }
     }
 }
