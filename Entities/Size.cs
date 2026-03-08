@@ -57,7 +57,7 @@ namespace Entities
 
         // הערה: ודאי אם ב-DB זה מוגדר כמספר או טקסט. השארתי string לפי הגרסה המעודכנת
         [Required]
-        public string ProductSize { get; set; } = null!;
+        public double ProductSize { get; set; }
 
         public int Amount { get; set; }
 

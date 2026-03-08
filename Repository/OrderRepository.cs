@@ -264,7 +264,7 @@ namespace Repository
                 foreach (var item in order.OrderItems)
                 {
                     var stockItem = await _jewelryStoreContext.Sizes
-                        .FirstOrDefaultAsync(ps => ps.ProductId == item.ProductId && ps.ProductSize == item.Size.ToString());
+                        .FirstOrDefaultAsync(ps => ps.ProductId == item.ProductId && ps.ProductSize == item.Size);
 
                     if (stockItem != null)
                     {

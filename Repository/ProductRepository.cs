@@ -374,7 +374,7 @@ namespace Repository
             string? sortMode)
         {
             IQueryable<Product> q = _jewelryStoreContext.Products
-                .Include(p => p.Category)
+               // .Include(p => p.Category)
                 .Include(p => p.Sizes);
 
             // ---- פילטרים ----

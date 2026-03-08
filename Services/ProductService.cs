@@ -298,7 +298,8 @@ namespace Services
             var sizes = product.Sizes
                 .Where(s => s.Amount > 0)
                 .Select(s => new ProductSizeDto(
-                    double.TryParse(s.ProductSize, out double sizeVal) ? sizeVal : 0, // המרה בטוחה מ-string ל-double
+                    //double.TryParse(s.ProductSize, out double sizeVal) ? sizeVal : 0, // המרה בטוחה מ-string ל-double
+                    (double)s.ProductSize,
                     s.Amount
                 ))
                 .ToList();
